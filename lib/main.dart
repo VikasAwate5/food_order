@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:food_order/src/feature/food_order/food_order_details_bloc.dart';
-import 'package:food_order/src/feature/food_order/food_order_details_page.dart';
-import 'package:provider/provider.dart';
+import 'package:food_order/src/widget_factory.dart';
 
 void main() {
   runApp(const MyApp());
@@ -12,17 +10,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final WidgetFactory widgetFactory = WidgetFactory.instance;
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: Provider<FoodOrderDetailsBloc>(
-        create: (context) => FoodOrderDetailsBlocImpl(),
-        child: const FoodOrderDetailsPage(),
-        dispose: (context, bloc) => bloc.dispose(),
-      ),
+      home: widgetFactory.getFoodOrderDetailsPage(),
     );
   }
 }

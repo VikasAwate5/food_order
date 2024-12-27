@@ -1,3 +1,4 @@
+import 'package:food_order/src/feature/food_order/months.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../../repository/food_order_details_repository.dart';
@@ -8,6 +9,8 @@ abstract class FoodOrderDetailsBloc {
   ValueStream<FoodOrderDetailsState> get stateStream;
 
   int calculateDailyFine(OptIns optIns);
+
+  Future<void> fetchOrderDetails({int month});
 
   void dispose();
 }
@@ -33,15 +36,7 @@ class FoodOrderDetailsBlocImpl extends FoodOrderDetailsBloc {
   int calculateMonthlyFine(List<Report> reports) {
     int totalFine = 0;
     for (final report in reports) {
-      if (report.optIns.breakfast == OptInType.pending) {
-        totalFine += 100;
-      }
-      if (report.optIns.lunch == OptInType.pending) {
-        totalFine += 100;
-      }
-      if (report.optIns.dinner == OptInType.pending) {
-        totalFine += 100;
-      }
+      totalFine += calculateDailyFine(report.optIns);
     }
     return totalFine;
   }
@@ -55,16 +50,18 @@ class FoodOrderDetailsBlocImpl extends FoodOrderDetailsBloc {
     return fine;
   }
 
-  Future<void> fetchOrderDetails() async {
+  @override
+  Future<void> fetchOrderDetails({int month = 1}) async {
     try {
       final foodOrderDetails =
-          await foodOrderDetailsRepository.fetchOrderDetails();
+          await foodOrderDetailsRepository.fetchOrderDetails(month: month);
       final monthlyFine = calculateMonthlyFine(foodOrderDetails.reports);
 
       final state = FoodOrderDetailsState(
         monthlyFine: monthlyFine,
         user: foodOrderDetails.user,
         orderDetails: foodOrderDetails.reports,
+        selectedMonth: Months.values.firstWhere((e) => e.value == month).name,
       );
       _state.add(state);
     } catch (error) {

@@ -7,17 +7,17 @@ import 'package:http/http.dart' as http;
 import 'model/food_order_details.dart';
 
 abstract class FoodOrderDetailsRepository {
-  Future<FoodOrderDetails> fetchOrderDetails();
+  Future<FoodOrderDetails> fetchOrderDetails({required int month});
 }
 
 class FoodOrderDetailsRepositoryImpl extends FoodOrderDetailsRepository {
   @override
-  Future<FoodOrderDetails> fetchOrderDetails() async {
-    final foodOrderDetails = await fetchOrderDetailsFromApi();
+  Future<FoodOrderDetails> fetchOrderDetails({required int month}) async {
+    final foodOrderDetails = await fetchOrderDetailsFromApi(month: month);
     return foodOrderDetails;
   }
 
-  Future<FoodOrderDetails> fetchOrderDetailsFromApi({int month = 11}) async {
+  Future<FoodOrderDetails> fetchOrderDetailsFromApi({int month = 1}) async {
     try {
       final response = await http.post(
         Uri.parse(Utils.baseUrl),
@@ -30,12 +30,12 @@ class FoodOrderDetailsRepositoryImpl extends FoodOrderDetailsRepository {
 
       if (response.statusCode == 200) {
         final data = json.decode(response.body) as Map<String, dynamic>;
-        final FoodOrderDetails foodOrderDetails =
-            FoodOrderDetails.fromJson(data);
+        final foodOrderDetails = FoodOrderDetails.fromJson(data);
         return foodOrderDetails;
       } else {
-
-        throw Exception('Failed to load order details');
+        throw Exception(
+          'Failed to load order details : Status code: ${response.statusCode}',
+        );
       }
     } catch (error) {
       throw Exception('Error fetching order details: $error');
