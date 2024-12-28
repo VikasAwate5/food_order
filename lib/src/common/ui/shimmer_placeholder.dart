@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:food_order/src/common/constant/color_constant.dart';
+import 'package:food_order/src/common/constant/dimens_constant.dart';
 
 class ShimmerPlaceholder extends StatelessWidget {
   const ShimmerPlaceholder({super.key});
@@ -6,10 +8,10 @@ class ShimmerPlaceholder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 100.0,
+      height: DimensConstant.size100,
       decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10.0),
+        color: ColorConstant.white,
+        borderRadius: BorderRadius.circular(DimensConstant.size10),
       ),
     );
   }

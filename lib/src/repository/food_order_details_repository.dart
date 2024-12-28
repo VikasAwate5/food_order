@@ -13,11 +13,11 @@ abstract class FoodOrderDetailsRepository {
 class FoodOrderDetailsRepositoryImpl extends FoodOrderDetailsRepository {
   @override
   Future<FoodOrderDetails> fetchOrderDetails({required int month}) async {
-    final foodOrderDetails = await fetchOrderDetailsFromApi(month: month);
+    final foodOrderDetails = await _fetchOrderDetailsFromApi(month: month);
     return foodOrderDetails;
   }
 
-  Future<FoodOrderDetails> fetchOrderDetailsFromApi({int month = 1}) async {
+  Future<FoodOrderDetails> _fetchOrderDetailsFromApi({int month = 1}) async {
     try {
       final response = await http.post(
         Uri.parse(Utils.baseUrl),

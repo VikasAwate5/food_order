@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:food_order/src/common/constant/color_constant.dart';
 import 'package:food_order/src/widget_factory.dart';
+
+import '../constant/dimens_constant.dart';
 
 class ErrorDialog extends StatelessWidget {
   const ErrorDialog({super.key});
@@ -9,45 +12,59 @@ class ErrorDialog extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Error'),
-        backgroundColor: Colors.redAccent,
+        backgroundColor: ColorConstant.redAccent,
         automaticallyImplyLeading: false,
       ),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(DimensConstant.size16),
         child: Center(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              const Icon(Icons.error, size: 100, color: Colors.redAccent),
-              const SizedBox(height: 20),
+              const Icon(
+                Icons.error,
+                size: DimensConstant.size100,
+                color: ColorConstant.redAccent,
+              ),
+              const SizedBox(height: DimensConstant.size20),
               const Text(
                 'An error occurred',
-                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                  fontSize: DimensConstant.size24,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: DimensConstant.size20),
               const Text(
                 'Something went wrong',
-                style: TextStyle(fontSize: 16),
+                style: TextStyle(fontSize: DimensConstant.size16),
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 50),
+              const SizedBox(height: DimensConstant.size50),
               ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.redAccent,
-                  minimumSize: const Size(200, 40),
+                  backgroundColor: ColorConstant.redAccent,
+                  minimumSize: const Size(
+                    DimensConstant.size200,
+                    DimensConstant.size40,
+                  ),
                 ),
                 onPressed: () {
                   final widgetFactory = WidgetFactory.instance;
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (context) =>
-                          widgetFactory.getFoodOrderDetailsPage(),
+                      builder: (_) => widgetFactory.getFoodOrderDetailsPage(),
                     ),
                   );
                 },
-                child: const Text('Retry',
-                    style: TextStyle(fontSize: 16, color: Colors.white)),
+                child: const Text(
+                  'Retry',
+                  style: TextStyle(
+                    fontSize: DimensConstant.size16,
+                    color: ColorConstant.white,
+                  ),
+                ),
               ),
             ],
           ),

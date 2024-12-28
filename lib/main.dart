@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
     final WidgetFactory widgetFactory = WidgetFactory.instance;
     return MaterialApp(
       title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../constant/color_constant.dart';
+
 class CustomShimmer extends StatefulWidget {
   final Widget child;
 
@@ -17,7 +19,7 @@ class _CustomShimmerState extends State<CustomShimmer>
   void initState() {
     super.initState();
     _controller =
-        AnimationController(vsync: this, duration: Duration(seconds: 2))
+        AnimationController(vsync: this, duration: const Duration(seconds: 2))
           ..repeat(reverse: true);
   }
 
@@ -42,7 +44,11 @@ class _CustomShimmerState extends State<CustomShimmer>
                 _controller.value,
                 _controller.value + 0.3
               ],
-              colors: [Colors.grey[300]!, Colors.grey[100]!, Colors.grey[300]!],
+              colors: const [
+                ColorConstant.grey300,
+                ColorConstant.grey100,
+                ColorConstant.grey300,
+              ],
             ).createShader(bounds);
           },
           child: widget.child,
